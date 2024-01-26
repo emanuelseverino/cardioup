@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="myModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-5">
+    <div class="card p-5">
+        <h1>{{ clinica }}</h1>
+        <p class="">Seleciona as datas que deseja baixar o relatório. <br>Seja cauteloso, evite buscar por periodos longos.</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <label for="inicial" class="form-label">Data incial</label>
+                    <input autofocus type="date" id="inicial" name="data_inicial" class="form-control p-3" aria-label="Data inicial"
+                           required>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <label for="final" class="form-label col-sm-12">Data final</label>
+                    <input type="date" id="final" name="data_final" class="form-control p-3" aria-label="Data final"
+                           required>
+                </div>
+
+            </div>
+            {% if erro %}
+            <div class="alert alert-danger text-center mt-4" role="alert">{{ erro }}</div>
+            {% endif %}
+            <div class="d-grid  col-xs-12 col-sm-12 mx-auto">
+                <button type="submit"
+                        class="btn btn-primary btn-block p-3 mt-3">Baixar relatório
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+
+    const dataInicialInput = document.getElementById('inicial');
+    const dataFinalInput = document.getElementById('final');
+
+    dataFinalInput.addEventListener('change', function() {
+        const dataInicial = new Date(dataInicialInput.value);
+        const dataFinal = new Date(dataFinalInput.value);
+
+    if (dataInicial > dataFinal) {
+
+        dataInicialInput.value = '';
+    }
+  });
+
+
+
+
+</script>
+{% endblock %}

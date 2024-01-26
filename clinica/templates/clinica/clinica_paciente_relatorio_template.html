@@ -1,0 +1,65 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CardioUP</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 2px;
+}
+
+tr:nth-child(even) {
+  background-color: red;
+}
+
+.display-6 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+<h3>{{ clinica }}</h3>
+
+<p>Lista de pacientes solicitados entre os dias <strong>{{ inicial }}</strong> e <strong>{{ final }}</strong>.<br>
+    Foram encontrados um total de <strong>{{ pacientes|length }}</strong> no periodo.</p>
+
+<hr>
+
+<h3>Lançamentos</h3>
+
+<table style="width:100%">
+    <tr>
+        <th style="width:5%; text-align:center">Nº</th>
+        <th>Nome</th>
+        <th style="width:25%">Data</th>
+    </tr>
+    {% for paciente in pacientes %}
+    <tr>
+        <td>{{ forloop.counter0|add:1 }}</td>
+        <td>{{ paciente.nome }}</td>
+        <td>{{ paciente.criado_em|date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

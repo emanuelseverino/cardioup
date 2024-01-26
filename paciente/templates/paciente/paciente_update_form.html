@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container p-5">
+    <form method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-grid align-center mx-auto col-xs-12 col-sm-12">
+            <input class="btn btn-success btn-block mt-2  p-3" type="submit" value="Atualizar">
+        </div>
+    </form>
+</div>
+{% endblock %}
