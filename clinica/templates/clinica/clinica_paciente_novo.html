@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-5">
+
+    <p class="display-5">{{ clinica }}</p>
+    <!--    <p>Até hoje em {{ hoje|date:"F" }} foram cadastrados {{ pacientes|length }} pacientes.</p>-->
+    <div class="card p-5 mt-3 mb-3">
+        <p class="display-6">Cadastre aqui um novo paciente para esta a clinica.</p>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="">
+                <label for="{{ field.label|lower }}" class="form-label">Nome</label>
+                <input autofocus type="text" class="form-control p-3" required id="{{ field.label|lower }}"
+                       name="{{ field.label|lower }}"
+                       placeholder="Ex: Maria José da Silva">
+            </div>
+            {% endfor %}
+            <div class="d-grid align-center mx-auto col-xs-12 col-sm-12">
+                <button type="submit" class="btn btn-primary btn-block mt-2  p-3">Cadastrar</button>
+            </div>
+        </form>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Nº</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Data</th>
+            <th scope="col">Atualizar</th>
+            <th scope="col">Excluir</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for paciente in pacientes_mes %}
+        <tr>
+            <td scope="row">{{ forloop.counter0|add:1 }}</td>
+            <td class="">{{ paciente.nome }}</td>
+            <td class="">{{ paciente.criado_em|date }}</td>
+            <td>
+                <a href="{% url 'paciente_update' paciente.id %}" class="btn btn-sm btn-outline-success" type="button">Editar</a>
+            </td>
+            <td>
+                <a href="{% url 'paciente_delete' paciente.id %}" class="btn btn-sm btn-outline-danger" type="button">Apagar</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

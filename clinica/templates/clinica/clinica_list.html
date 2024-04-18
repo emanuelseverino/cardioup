@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-5">
+
+    <p class="h1">Clinicas</p>
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="" scope="">Nome</th>
+                <th class="" scope="">Relatório</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for clinica in clinicas %}
+            <tr>
+                <td class=""><a class="nav-link active" href="{% url 'clinica_detail' clinica.id %}">{{ clinica.nome }}</a></td>
+                <td>
+                    <a href="{% url 'relatorio_clinica' clinica.id %}" class="btn btn-sm btn-outline-success" type="button">Relatório</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}

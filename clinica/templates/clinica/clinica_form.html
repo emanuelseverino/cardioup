@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container pt-5">
+    <p class="h1">Crie uma nova clinica</p>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="">
+            <label for="{{ field.label|lower }}" class="form-label">Nome</label>
+            <input autofocus type="text" class="form-control p-3" required id="{{ field.label|lower }}"
+                   name="{{ field.label|lower }}" placeholder="ex: Clinica Central">
+        </div>
+        {% endfor %}
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-block mt-3 col-xs-12 col-sm-12 p-3">Cadastrar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

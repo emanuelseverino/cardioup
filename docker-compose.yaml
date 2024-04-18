@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+  nginx:
+    build:
+      dockerfile: ./docker/nginx.dockerfile
+      context: .
+    image: emanuelseverino/nginx_cardioup:v1
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites-available:/etc/nginx/sites-available
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/letsencrypt:/etc/letsencrypt
+    networks:
+      - nwcardioup
+    depends_on:
+      - cardioup1
+      - cardioup2
+      - cardioup3
+
+  pgcardioup:
+    build:
+      dockerfile: ./docker/pgcardioup.dockerfile
+      context: .
+    image: emanuelseverino/pgcardioup:v1
+    container_name: pgcardioup
+    ports:
+      - "5432"
+    networks:
+      - nwcardioup
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+  cardioup1:
+    build:
+      dockerfile: ./docker/cardioup.dockerfile
+      context: .
+    image: emanuelseverino/cardioup:v1
+    container_name: cardioup1
+    ports:
+      - "8000"
+    networks:
+      - nwcardioup
+    depends_on:
+      - pgcardioup
+
+  cardioup2:
+    build:
+      dockerfile: ./docker/cardioup.dockerfile
+      context: .
+    image: emanuelseverino/cardioup:v1
+    container_name: cardioup2
+    ports:
+      - "8000"
+    networks:
+      - nwcardioup
+    depends_on:
+      - pgcardioup
+
+  cardioup3:
+    build:
+      dockerfile: ./docker/cardioup.dockerfile
+      context: .
+    image: emanuelseverino/cardioup:v1
+    container_name: cardioup3
+    ports:
+      - "8000"
+    networks:
+      - nwcardioup
+    depends_on:
+      - pgcardioup
+
+networks:
+  nwcardioup:
+    driver: bridge
+
+volumes:
+  pgdata:
