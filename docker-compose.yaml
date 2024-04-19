@@ -16,9 +16,6 @@ services:
       - cardioup1
       - cardioup2
       - cardioup3
-#    volumes:
-#      - ./nginx/conf/:/etc/nginx/conf.d/:ro
-#      - ./certbot/www/:/var/www/certbot/:ro
 
   pgcardioup:
     build:
@@ -27,7 +24,7 @@ services:
     image: emanuelseverino/pgcardioup:v1
     container_name: pgcardioup
     ports:
-      - "5432"
+      - "5432:5432"
     networks:
       - nwcardioup
     volumes:
@@ -71,11 +68,6 @@ services:
       - nwcardioup
     depends_on:
       - pgcardioup
-#  certbot:
-#    image: certbot/certbot:latest
-#    volumes:
-#      - ./certbot/www/:/var/www/certbot/:rw
-#      - ./certbot/conf/:/etc/letsencrypt/:rw
 
 
 networks:
