@@ -27,7 +27,7 @@ services:
     image: emanuelseverino/pgcardioup:v1
     container_name: pgcardioup
     ports:
-      - "5432:5432"
+      - "5432"
     networks:
       - nwcardioup
     volumes:
