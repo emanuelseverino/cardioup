@@ -16,6 +16,7 @@ services:
       - cardioup1
       - cardioup2
       - cardioup3
+    restart: always
 
   pgcardioup:
     build:
@@ -29,6 +30,7 @@ services:
       - nwcardioup
     volumes:
       - pgdata:/var/lib/postgresql/data/
+    restart: always
 
   cardioup1:
     build:
@@ -42,6 +44,7 @@ services:
       - nwcardioup
     depends_on:
       - pgcardioup
+    restart: always
 
   cardioup2:
     build:
@@ -55,6 +58,7 @@ services:
       - nwcardioup
     depends_on:
       - pgcardioup
+    restart: always
 
   cardioup3:
     build:
@@ -68,6 +72,7 @@ services:
       - nwcardioup
     depends_on:
       - pgcardioup
+    restart: always
 
 
 networks:
