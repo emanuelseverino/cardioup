@@ -17,6 +17,9 @@ services:
       - cardioup2
       - cardioup3
     restart: always
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /etc/letsencrypt:/etc/letsencrypt
 
   pgcardioup:
     build:
@@ -73,6 +76,14 @@ services:
     depends_on:
       - pgcardioup
     restart: always
+
+  certbot:
+    image: certbot/certbot:lasted
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email emanuelsmseverino@gmail.com -d cardioupmapa.com.br --agree-tos
 
 
 networks:
