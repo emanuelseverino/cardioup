@@ -17,6 +17,10 @@ services:
       - cardioup2
       - cardioup3
     restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
 
   pgcardioup:
     build:
@@ -73,6 +77,12 @@ services:
     depends_on:
       - pgcardioup
     restart: always
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
 networks:
   nwcardioup:
